@@ -1,0 +1,618 @@
+/* Reset стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Основные стили body */
+body {
+    font-family: 'Courier New', 'Monaco', monospace;
+    background: #0a0a0a;
+    color: #00ff00;
+    min-height: 100vh;
+    padding: 10px;
+    line-height: 1.2;
+    image-rendering: pixelated;
+    transition: all 0.3s ease;
+}
+
+/* Тема по умолчанию - зеленая */
+body[data-theme="green"] {
+    --primary-color: #00ff00;
+    --primary-dark: #00cc00;
+    --primary-light: #008800;
+    --bg-primary: #001100;
+    --bg-secondary: #000d00;
+    --bg-dark: #000800;
+    --border-color: #00ff00;
+    --accent-color: #ff3300;
+    --accent-bg: #330000;
+    --text-glow: 0 0 5px #00ff00;
+    --box-glow: 0 0 10px #00ff00;
+}
+
+/* Синяя тема */
+body[data-theme="blue"] {
+    --primary-color: #0088ff;
+    --primary-dark: #0066cc;
+    --primary-light: #004499;
+    --bg-primary: #000833;
+    --bg-secondary: #000622;
+    --bg-dark: #000411;
+    --border-color: #0088ff;
+    --accent-color: #ff6600;
+    --accent-bg: #332200;
+    --text-glow: 0 0 5px #0088ff;
+    --box-glow: 0 0 10px #0088ff;
+    color: #0088ff;
+}
+
+/* Эффект сканирования CRT */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        rgba(0, 255, 0, 0.03) 50%,
+        rgba(0, 0, 0, 0.1) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 1000;
+    pointer-events: none;
+    animation: scanline 2s linear infinite;
+}
+
+body[data-theme="blue"]::before {
+    background: linear-gradient(
+        rgba(0, 136, 255, 0.03) 50%,
+        rgba(0, 0, 0, 0.1) 50%
+    );
+}
+
+@keyframes scanline {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0 100%;
+    }
+}
+
+/* Контейнер */
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 0;
+    box-shadow: 
+        var(--box-glow),
+        inset 0 0 10px rgba(0, 255, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+body[data-theme="blue"] .container {
+    box-shadow: 
+        var(--box-glow),
+        inset 0 0 10px rgba(0, 136, 255, 0.1);
+}
+
+/* Эффект свечения */
+.container::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 0 20px var(--border-color);
+    z-index: -1;
+    opacity: 0.5;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px var(--border-color);
+    }
+    to {
+        box-shadow: 0 0 20px var(--border-color), 0 0 30px var(--border-color);
+    }
+}
+
+/* Шапка */
+.header {
+    background: var(--bg-secondary);
+    color: var(--primary-color);
+    padding: 20px;
+    border-bottom: 2px solid var(--border-color);
+    text-shadow: var(--text-glow);
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    color: var(--primary-dark);
+}
+
+/* Переключатель темы */
+.theme-switcher {
+    position: relative;
+}
+
+.theme-btn {
+    background: var(--bg-primary);
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-btn:hover {
+    background: var(--primary-color);
+    color: var(--bg-primary);
+    box-shadow: var(--box-glow);
+    transform: rotate(15deg);
+}
+
+/* Секция ввода */
+.input-section {
+    padding: 20px;
+    border-bottom: 1px solid var(--bg-dark);
+    background: var(--bg-secondary);
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.task-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    background: var(--bg-primary);
+    color: var(--primary-color);
+    text-shadow: var(--text-glow);
+    transition: all 0.3s ease;
+}
+
+.task-input::placeholder {
+    color: var(--primary-light);
+    text-shadow: none;
+}
+
+.task-input:focus {
+    outline: none;
+    border-color: var(--border-color);
+    box-shadow: var(--box-glow);
+    background: var(--bg-secondary);
+}
+
+.add-btn {
+    padding: 12px 20px;
+    background: var(--bg-primary);
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.1s ease;
+}
+
+.add-btn:hover {
+    background: var(--primary-color);
+    color: var(--bg-primary);
+    text-shadow: none;
+    box-shadow: var(--box-glow);
+}
+
+.add-btn:active {
+    transform: translate(1px, 1px);
+}
+
+/* Фильтры */
+.filters {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.filter-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--primary-color);
+    border-radius: 0;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+    transition: all 0.1s ease;
+    text-transform: uppercase;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: var(--primary-color);
+    color: var(--bg-primary);
+    text-shadow: none;
+}
+
+/* Статистика */
+.stats {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--bg-dark);
+    font-size: 12px;
+}
+
+#taskCount {
+    font-weight: bold;
+    color: var(--primary-color);
+    text-shadow: var(--text-glow);
+}
+
+.clear-btn {
+    padding: 6px 12px;
+    background: var(--accent-bg);
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 0;
+    cursor: pointer;
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    transition: all 0.1s ease;
+}
+
+.clear-btn:hover {
+    background: var(--accent-color);
+    color: var(--accent-bg);
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* Список задач */
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    background: var(--bg-dark);
+}
+
+/* Стили скроллбара */
+.task-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.task-list::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+.task-list::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border: 1px solid var(--primary-dark);
+}
+
+.task-list::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--bg-primary);
+    transition: all 0.1s ease;
+    animation: typeIn 0.3s ease;
+    position: relative;
+}
+
+.task-item:hover {
+    background: var(--bg-secondary);
+    border-left: 2px solid var(--border-color);
+}
+
+.task-item.completed {
+    opacity: 0.7;
+    background: var(--bg-secondary);
+}
+
+.task-item.completed::before {
+    content: "✓";
+    position: absolute;
+    left: 5px;
+    color: var(--primary-light);
+}
+
+@keyframes typeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.task-checkbox {
+    width: 16px;
+    height: 16px;
+    margin-right: 12px;
+    cursor: pointer;
+    appearance: none;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.task-checkbox:checked {
+    background: var(--primary-color);
+}
+
+.task-checkbox:checked::after {
+    content: "✓";
+    position: absolute;
+    top: -2px;
+    left: 2px;
+    color: var(--bg-primary);
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.task-text {
+    flex: 1;
+    font-size: 14px;
+    color: var(--primary-color);
+    text-shadow: var(--text-glow);
+}
+
+.task-item.completed .task-text {
+    text-decoration: line-through;
+    color: var(--primary-light);
+    text-shadow: 0 0 3px var(--primary-light);
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+}
+
+.task-item:hover .task-actions {
+    opacity: 1;
+}
+
+.delete-btn {
+    background: var(--accent-bg);
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    width: 24px;
+    height: 24px;
+    border-radius: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.1s ease;
+    font-family: monospace;
+    font-size: 10px;
+}
+
+.delete-btn:hover {
+    background: var(--accent-color);
+    color: var(--accent-bg);
+    box-shadow: 0 0 8px var(--accent-color);
+}
+
+/* Состояние пустого списка */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--primary-light);
+    display: none;
+    background: var(--bg-dark);
+}
+
+.empty-state.show {
+    display: block;
+}
+
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.5;
+    image-rendering: pixelated;
+}
+
+.empty-state h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: var(--primary-dark);
+}
+
+.empty-state p {
+    font-size: 0.9rem;
+    color: var(--primary-light);
+}
+
+/* Стили для уведомлений */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background: var(--bg-primary);
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    box-shadow: var(--box-glow);
+    z-index: 1000;
+    animation: terminalIn 0.3s ease;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.notification-success {
+    background: var(--bg-primary);
+    color: var(--primary-color);
+    border-color: var(--border-color);
+}
+
+.notification-error {
+    background: var(--accent-bg);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.notification-info {
+    background: #000033;
+    color: #3366ff;
+    border-color: #3366ff;
+}
+
+@keyframes terminalIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes terminalOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    body {
+        padding: 5px;
+        font-size: 12px;
+    }
+    
+    .container {
+        border-width: 1px;
+    }
+    
+    .header {
+        padding: 15px;
+    }
+    
+    .title {
+        font-size: 1.4rem;
+    }
+    
+    .input-section {
+        padding: 15px;
+    }
+    
+    .input-group {
+        flex-direction: column;
+    }
+    
+    .stats {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .task-item {
+        padding: 12px 15px;
+    }
+    
+    .task-actions {
+        opacity: 1;
+    }
+    
+    .notification {
+        right: 10px;
+        left: 10px;
+        top: 10px;
+        font-size: 11px;
+    }
+}
+
+/* Эффект мерцания терминала */
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.95; }
+}
+
+.container {
+    animation: flicker 5s infinite;
+}
+
+/* Пиксельные разделители */
+.input-section, .stats {
+    position: relative;
+}
+
+.input-section::after, .stats::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        var(--border-color) 20%,
+        var(--border-color) 80%,
+        transparent 100%
+    );
+}

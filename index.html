@@ -1,13 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <scripts src="scripts/main.js" defer></scripts>
+    <title>Мой ToDo List</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+    <div class="container">
+        <header class="header">
+            <div class="header-top">
+                <h1 class="title">📝 Мой ToDo List</h1>
+                <div class="theme-switcher">
+                    <button id="themeToggle" class="theme-btn" title="Сменить тему">
+                        <span class="theme-icon">🎨</span>
+                    </button>
+                </div>
+            </div>
+            <p class="subtitle">Организуйте свои задачи легко</p>
+        </header>
+
+        <div class="input-section">
+            <div class="input-group">
+                <input type="text" id="taskInput" placeholder="Введите новую задачу..." class="task-input">
+                <button id="addTaskBtn" class="add-btn">Добавить</button>
+            </div>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Все</button>
+                <button class="filter-btn" data-filter="active">Активные</button>
+                <button class="filter-btn" data-filter="completed">Выполненные</button>
+            </div>
+        </div>
+
+        <div class="stats">
+            <span id="taskCount">Всего задач: 0</span>
+            <button id="clearCompleted" class="clear-btn">Очистить выполненные</button>
+        </div>
+
+        <ul id="taskList" class="task-list"></ul>
+
+        <div class="empty-state" id="emptyState">
+            <div class="empty-icon">📋</div>
+            <h3>Список задач пуст</h3>
+            <p>Добавьте свою первую задачу выше</p>
+        </div>
+    </div>
+
+    <script src="scripts/main.js"></script>
 </body>
 </html>
