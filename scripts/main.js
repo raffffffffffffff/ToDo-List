@@ -42,9 +42,55 @@ class TodoList {
     }
 
     toggleTheme() {
-        const newTheme = this.currentTheme === 'green' ? 'blue' : 'green';
-        this.setTheme(newTheme);
-        this.showNotification(`Тема изменена на ${newTheme === 'green' ? 'зеленую' : 'синюю'}!`, 'info');
+    const newTheme = this.currentTheme === 'green' ? 'blue' : 'green';
+    this.showThemeNotification(newTheme);
+    this.setTheme(newTheme);
+    }
+
+    showThemeNotification(newTheme) {
+    // Создаем уведомление с правильными цветами для новой темы
+    const notification = document.createElement('div');
+    
+    // Сначала применяем тему
+    const isGreen = newTheme === 'green';
+    notification.className = `notification notification-info theme-notification`;
+    
+    // Устанавливаем текст
+    notification.textContent = `Тема изменена на ${isGreen ? 'зеленую' : 'синюю'}!`;
+    
+    // Добавляем в DOM
+    document.body.appendChild(notification);
+    
+    // Принудительно устанавливаем стили после добавления в DOM
+    setTimeout(() => {
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background: ${isGreen ? '#001100' : '#000833'};
+            color: ${isGreen ? '#00ff00' : '#0088ff'};
+            border: 1px solid ${isGreen ? '#00ff00' : '#0088ff'};
+            border-radius: 0;
+            box-shadow: ${isGreen ? '0 0 10px #00ff00' : '0 0 10px #0088ff'};
+            z-index: 1000;
+            animation: terminalIn 0.3s ease;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-width: 250px;
+            text-align: center;
+            white-space: nowrap;
+            box-sizing: border-box;
+        `;
+    }, 10);
+
+    // Удаляем через 3 секунды
+    setTimeout(() => {
+        notification.style.animation = 'terminalOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
     }
 
     addTask() {
