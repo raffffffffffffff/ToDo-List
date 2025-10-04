@@ -647,4 +647,11 @@ body[data-theme="blue"] .container {
         top: 10px;
         font-size: 11px;
     }
+
+    /* Фиксированная ширина для уведомлений о смене темы */
+    .notification {
+    min-width: 250px !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    }
 }
