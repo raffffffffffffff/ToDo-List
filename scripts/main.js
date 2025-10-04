@@ -38,7 +38,7 @@ class TodoList {
         
         // Обновляем иконку темы
         const themeIcon = document.querySelector('.theme-icon');
-        themeIcon.textContent = theme === 'green' ? '💚' : '💙';
+        themeIcon.textContent = '⭐';
     }
 
     toggleTheme() {

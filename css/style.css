@@ -15,6 +15,8 @@ body {
     line-height: 1.2;
     image-rendering: pixelated;
     transition: all 0.3s ease;
+    position: relative;
+    overflow-x: hidden;
 }
 
 /* Тема по умолчанию - зеленая */
@@ -30,6 +32,7 @@ body[data-theme="green"] {
     --accent-bg: #330000;
     --text-glow: 0 0 5px #00ff00;
     --box-glow: 0 0 10px #00ff00;
+    --scan-color: rgba(0, 255, 0, 0.03);
 }
 
 /* Синяя тема */
@@ -45,10 +48,11 @@ body[data-theme="blue"] {
     --accent-bg: #332200;
     --text-glow: 0 0 5px #0088ff;
     --box-glow: 0 0 10px #0088ff;
+    --scan-color: rgba(0, 136, 255, 0.03);
     color: #0088ff;
 }
 
-/* Эффект сканирования CRT */
+/* Эффект сканирования CRT - основной */
 body::before {
     content: "";
     position: fixed;
@@ -57,7 +61,7 @@ body::before {
     width: 100%;
     height: 100%;
     background: linear-gradient(
-        rgba(0, 255, 0, 0.03) 50%,
+        var(--scan-color) 50%,
         rgba(0, 0, 0, 0.1) 50%
     );
     background-size: 100% 4px;
@@ -66,11 +70,23 @@ body::before {
     animation: scanline 2s linear infinite;
 }
 
-body[data-theme="blue"]::before {
+/* Дополнительный эффект движущихся линий */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: linear-gradient(
-        rgba(0, 136, 255, 0.03) 50%,
-        rgba(0, 0, 0, 0.1) 50%
+        to bottom,
+        transparent 50%,
+        var(--scan-color) 51%
     );
+    background-size: 100% 8px;
+    z-index: 999;
+    pointer-events: none;
+    animation: scanlineMove 3s linear infinite;
 }
 
 @keyframes scanline {
@@ -79,6 +95,15 @@ body[data-theme="blue"]::before {
     }
     100% {
         background-position: 0 100%;
+    }
+}
+
+@keyframes scanlineMove {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(100vh);
     }
 }
 
@@ -180,6 +205,13 @@ body[data-theme="blue"] .container {
     color: var(--bg-primary);
     box-shadow: var(--box-glow);
     transform: rotate(15deg);
+}
+
+/* Красная звездочка для переключателя темы */
+.theme-icon {
+    color: #ff3300;
+    text-shadow: 0 0 8px #ff3300;
+    filter: brightness(1.2);
 }
 
 /* Секция ввода */
@@ -537,6 +569,37 @@ body[data-theme="blue"] .container {
     }
 }
 
+/* Эффект мерцания терминала */
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.98; }
+}
+
+.container {
+    animation: flicker 3s infinite;
+}
+
+/* Пиксельные разделители */
+.input-section, .stats {
+    position: relative;
+}
+
+.input-section::after, .stats::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        var(--border-color) 20%,
+        var(--border-color) 80%,
+        transparent 100%
+    );
+}
+
 /* Адаптивность */
 @media (max-width: 768px) {
     body {
@@ -584,35 +647,4 @@ body[data-theme="blue"] .container {
         top: 10px;
         font-size: 11px;
     }
-}
-
-/* Эффект мерцания терминала */
-@keyframes flicker {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.95; }
-}
-
-.container {
-    animation: flicker 5s infinite;
-}
-
-/* Пиксельные разделители */
-.input-section, .stats {
-    position: relative;
-}
-
-.input-section::after, .stats::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(
-        to right,
-        transparent 0%,
-        var(--border-color) 20%,
-        var(--border-color) 80%,
-        transparent 100%
-    );
 }
