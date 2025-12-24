@@ -13,21 +13,17 @@ class TodoList {
     }
 
     bindEvents() {
-        // Добавление задачи
         document.getElementById('addTaskBtn').addEventListener('click', () => this.addTask());
         document.getElementById('taskInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.addTask();
         });
 
-        // Фильтры
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', (e) => this.setFilter(e.target.dataset.filter));
         });
 
-        // Очистка выполненных
         document.getElementById('clearCompleted').addEventListener('click', () => this.clearCompleted());
 
-        // Переключение темы
         document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
     }
 
@@ -35,8 +31,6 @@ class TodoList {
         this.currentTheme = theme;
         document.body.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
-        
-        // Обновляем иконку темы
         const themeIcon = document.querySelector('.theme-icon');
         themeIcon.textContent = '⭐';
     }
@@ -48,20 +42,15 @@ class TodoList {
     }
 
     showThemeNotification(newTheme) {
-    // Создаем уведомление с правильными цветами для новой темы
     const notification = document.createElement('div');
     
-    // Сначала применяем тему
     const isGreen = newTheme === 'green';
     notification.className = `notification notification-info theme-notification`;
     
-    // Устанавливаем текст
     notification.textContent = `Тема изменена на ${isGreen ? 'зеленую' : 'синюю'}!`;
     
-    // Добавляем в DOM
     document.body.appendChild(notification);
     
-    // Принудительно устанавливаем стили после добавления в DOM
     setTimeout(() => {
         notification.style.cssText = `
             position: fixed;
@@ -86,7 +75,6 @@ class TodoList {
         `;
     }, 10);
 
-    // Удаляем через 3 секунды
     setTimeout(() => {
         notification.style.animation = 'terminalOut 0.3s ease';
         setTimeout(() => notification.remove(), 300);
@@ -135,7 +123,6 @@ class TodoList {
     setFilter(filter) {
         this.currentFilter = filter;
         
-        // Обновляем активную кнопку
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.filter === filter);
         });
@@ -175,12 +162,10 @@ class TodoList {
         const taskCount = document.getElementById('taskCount');
         const filteredTasks = this.getFilteredTasks();
 
-        // Обновляем счетчик
         const totalTasks = this.tasks.length;
         const completedTasks = this.tasks.filter(task => task.completed).length;
         taskCount.textContent = `Всего: ${totalTasks} | Выполнено: ${completedTasks}`;
 
-        // Рендерим задачи
         taskList.innerHTML = '';
 
         if (filteredTasks.length === 0) {
@@ -205,7 +190,6 @@ class TodoList {
             </div>
         `;
 
-        // События
         li.querySelector('.task-checkbox').addEventListener('change', () => this.toggleTask(task.id));
         li.querySelector('.delete-btn').addEventListener('click', () => this.deleteTask(task.id));
 
@@ -219,14 +203,12 @@ class TodoList {
     }
 
     showNotification(message, type = 'info') {
-        // Создаем уведомление
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
         notification.textContent = message;
         
         document.body.appendChild(notification);
 
-        // Удаляем через 3 секунды
         setTimeout(() => {
             notification.style.animation = 'slideOutRight 0.3s ease';
             setTimeout(() => notification.remove(), 300);
@@ -238,7 +220,6 @@ class TodoList {
     }
 }
 
-// Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
     new TodoList();
 });

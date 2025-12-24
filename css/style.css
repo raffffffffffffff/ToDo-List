@@ -1,11 +1,9 @@
-/* Reset стилей */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Основные стили body */
 body {
     font-family: 'Courier New', 'Monaco', monospace;
     background: #0a0a0a;
@@ -19,7 +17,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Тема по умолчанию - зеленая */
 body[data-theme="green"] {
     --primary-color: #00ff00;
     --primary-dark: #00cc00;
@@ -35,7 +32,6 @@ body[data-theme="green"] {
     --scan-color: rgba(0, 255, 0, 0.03);
 }
 
-/* Синяя тема */
 body[data-theme="blue"] {
     --primary-color: #0088ff;
     --primary-dark: #0066cc;
@@ -52,7 +48,6 @@ body[data-theme="blue"] {
     color: #0088ff;
 }
 
-/* Эффект сканирования CRT - основной */
 body::before {
     content: "";
     position: fixed;
@@ -70,7 +65,6 @@ body::before {
     animation: scanline 2s linear infinite;
 }
 
-/* Дополнительный эффект движущихся линий */
 body::after {
     content: "";
     position: fixed;
@@ -107,7 +101,6 @@ body::after {
     }
 }
 
-/* Контейнер */
 .container {
     max-width: 700px;
     margin: 0 auto;
@@ -128,7 +121,6 @@ body[data-theme="blue"] .container {
         inset 0 0 10px rgba(0, 136, 255, 0.1);
 }
 
-/* Эффект свечения */
 .container::after {
     content: "";
     position: absolute;
@@ -153,7 +145,6 @@ body[data-theme="blue"] .container {
     }
 }
 
-/* Шапка */
 .header {
     background: var(--bg-secondary);
     color: var(--primary-color);
@@ -181,7 +172,6 @@ body[data-theme="blue"] .container {
     color: var(--primary-dark);
 }
 
-/* Переключатель темы */
 .theme-switcher {
     position: relative;
 }
@@ -207,14 +197,12 @@ body[data-theme="blue"] .container {
     transform: rotate(15deg);
 }
 
-/* Красная звездочка для переключателя темы */
 .theme-icon {
     color: #ff3300;
     text-shadow: 0 0 8px #ff3300;
     filter: brightness(1.2);
 }
 
-/* Секция ввода */
 .input-section {
     padding: 20px;
     border-bottom: 1px solid var(--bg-dark);
@@ -278,7 +266,6 @@ body[data-theme="blue"] .container {
     transform: translate(1px, 1px);
 }
 
-/* Фильтры */
 .filters {
     display: flex;
     gap: 8px;
@@ -305,7 +292,6 @@ body[data-theme="blue"] .container {
     text-shadow: none;
 }
 
-/* Статистика */
 .stats {
     padding: 15px 20px;
     display: flex;
@@ -341,7 +327,6 @@ body[data-theme="blue"] .container {
     box-shadow: 0 0 10px var(--accent-color);
 }
 
-/* Список задач */
 .task-list {
     list-style: none;
     padding: 0;
@@ -351,7 +336,6 @@ body[data-theme="blue"] .container {
     background: var(--bg-dark);
 }
 
-/* Стили скроллбара */
 .task-list::-webkit-scrollbar {
     width: 8px;
 }
@@ -479,7 +463,6 @@ body[data-theme="blue"] .container {
     box-shadow: 0 0 8px var(--accent-color);
 }
 
-/* Состояние пустого списка */
 .empty-state {
     text-align: center;
     padding: 40px 20px;
@@ -510,7 +493,6 @@ body[data-theme="blue"] .container {
     color: var(--primary-light);
 }
 
-/* Стили для уведомлений */
 .notification {
     position: fixed;
     top: 20px;
@@ -569,7 +551,6 @@ body[data-theme="blue"] .container {
     }
 }
 
-/* Эффект мерцания терминала */
 @keyframes flicker {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.98; }
@@ -579,7 +560,6 @@ body[data-theme="blue"] .container {
     animation: flicker 3s infinite;
 }
 
-/* Пиксельные разделители */
 .input-section, .stats {
     position: relative;
 }
@@ -600,7 +580,6 @@ body[data-theme="blue"] .container {
     );
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     body {
         padding: 5px;
@@ -648,7 +627,6 @@ body[data-theme="blue"] .container {
         font-size: 11px;
     }
 
-    /* Фиксированная ширина для уведомлений о смене темы */
     .notification {
     min-width: 250px !important;
     text-align: center !important;
