@@ -1,0 +1,12 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "start:static": "npx serve . -s" 
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+
